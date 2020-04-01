@@ -68,87 +68,88 @@ public class Hangman {
 
 	public static String hangmanGuiImage() {
 
-		String hangmanImage = new String("Wrong guess, try again");
+		String hangmanImage = new String("");
 		if (count == 1) {
-			hangmanImage += "\n";
-			hangmanImage += "\n";
-			hangmanImage += "\n";
-			hangmanImage += "\n";
-			hangmanImage += "\n";
+			hangmanImage += "Wrong guess, try again\n";
+			hangmanImage += " \n";
+			hangmanImage += " \n";
+			hangmanImage += " \n";
+			hangmanImage += " \n";
+			hangmanImage += " \n";
 			hangmanImage += "___|___";
 			hangmanImage += "\n";
 		}
 		if (count == 2) {
-			System.out.println("Wrong guess, try again");
-			System.out.println("   |");
-			System.out.println("   |");
-			System.out.println("   |");
-			System.out.println("   |");
-			System.out.println("   |");
-			System.out.println("   |");
-			System.out.println("   |");
-			System.out.println("___|___");
+			hangmanImage += "Wrong guess, try again\n";
+			hangmanImage += "   |\n";
+			hangmanImage += "   |\n";
+			hangmanImage += "   |\n";
+			hangmanImage += "   |\n";
+			hangmanImage += "   |\n";
+			hangmanImage += "   |\n";
+			hangmanImage += "   |\n";
+			hangmanImage += "___|___";
 		}
 		if (count == 3) {
-			System.out.println("Wrong guess, try again");
-			System.out.println("   ____________");
-			System.out.println("   |");
-			System.out.println("   |");
-			System.out.println("   |");
-			System.out.println("   |");
-			System.out.println("   |");
-			System.out.println("   |");
-			System.out.println("   | ");
-			System.out.println("___|___");
+			hangmanImage += "Wrong guess, try again\n";
+			hangmanImage += "   ____________\n";
+			hangmanImage += "   |\n";
+			hangmanImage += "   |\n";
+			hangmanImage += "   |\n";
+			hangmanImage += "   |\n";
+			hangmanImage += "   |\n";
+			hangmanImage += "   |\n";
+			hangmanImage += "   |\n";
+			hangmanImage += "___|___";
 		}
 		if (count == 4) {
-			System.out.println("Wrong guess, try again");
-			System.out.println("   ____________");
-			System.out.println("   |          _|_");
-			System.out.println("   |         /   \\");
-			System.out.println("   |        |     |");
-			System.out.println("   |         \\_ _/");
-			System.out.println("   |");
-			System.out.println("   |");
-			System.out.println("   |");
-			System.out.println("___|___");
+			hangmanImage += "Wrong guess, try again\n";
+			hangmanImage += "   ____________\n";
+			hangmanImage += "   |          _|_\n";
+			hangmanImage += "   |         /   \\\n";
+			hangmanImage += "   |        |     |\n";
+			hangmanImage += "   |         \\_ _/\n";
+			hangmanImage += "   |\n";
+			hangmanImage += "   |\n";
+			hangmanImage += "   |\n";
+			hangmanImage += "___|___";
 		}
 		if (count == 5) {
-			System.out.println("Wrong guess, try again");
-			System.out.println("   ____________");
-			System.out.println("   |          _|_");
-			System.out.println("   |         /   \\");
-			System.out.println("   |        |     |");
-			System.out.println("   |         \\_ _/");
-			System.out.println("   |           |");
-			System.out.println("   |           |");
-			System.out.println("   |");
-			System.out.println("___|___");
+			hangmanImage += "Wrong guess, try again\n";
+			hangmanImage += "   ____________\n";
+			hangmanImage += "   |          _|_\n";
+			hangmanImage += "   |         /   \\\n";
+			hangmanImage += "   |        |     |\n";
+			hangmanImage += "   |         \\_ _/\n";
+			hangmanImage += "   |           |\n";
+			hangmanImage += "   |           |\n";
+			hangmanImage += "   |\n";
+			hangmanImage += "___|___";
 		}
 		if (count == 6) {
-			System.out.println("Wrong guess, try again");
-			System.out.println("   ____________");
-			System.out.println("   |          _|_");
-			System.out.println("   |         /   \\");
-			System.out.println("   |        |     |");
-			System.out.println("   |         \\_ _/");
-			System.out.println("   |           |");
-			System.out.println("   |           |");
-			System.out.println("   |          / \\ ");
-			System.out.println("___|___      /   \\");
+			hangmanImage += "Wrong guess, try again\n";
+			hangmanImage += "   ____________\n";
+			hangmanImage += "   |          _|_\n";
+			hangmanImage += "   |         /   \\\n";
+			hangmanImage += "   |        |     |\n";
+			hangmanImage += "   |         \\_ _/\n";
+			hangmanImage += "   |           |\n";
+			hangmanImage += "   |           |\n";
+			hangmanImage += "   |          / \\\n ";
+			hangmanImage += "___|___      /   \\\n";
 		}
 		if (count == 7) {
-			System.out.println("GAME OVER!");
-			System.out.println("   ____________");
-			System.out.println("   |          _|_");
-			System.out.println("   |         /   \\");
-			System.out.println("   |        |     |");
-			System.out.println("   |         \\_ _/");
-			System.out.println("   |          _|_");
-			System.out.println("   |         / | \\");
-			System.out.println("   |          / \\ ");
-			System.out.println("___|___      /   \\");
-			System.out.println("GAME OVER! The word was " + word);
+			hangmanImage += "GAME OVER!\n";
+			hangmanImage += "   ____________";
+			hangmanImage += "   |          _|_\n";
+			hangmanImage += "   |         /   \\\n";
+			hangmanImage += "   |        |     |\n";
+			hangmanImage += "   |         \\_ _/\n";
+			hangmanImage += "   |          _|_\n";
+			hangmanImage += "   |         / | \\\n";
+			hangmanImage += "   |          / \\ \n";
+			hangmanImage += "___|___      /   \\\n";
+			hangmanImage += "The word was " + word;
 		}
 
 		return hangmanImage;
