@@ -15,6 +15,8 @@ public class Hangman {
 
 	public static void main(String[] args) {
 
+		CommandLineParser parser = new CommandLineParser();
+
 		Scanner sc = new Scanner(System.in);
 		boolean bContinue = true;
 		initialize();
