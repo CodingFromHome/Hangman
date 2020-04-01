@@ -15,6 +15,31 @@ public class Hangman {
 
 	public static void main(String[] args) {
 
+		int i = 0, j;
+		String arg;
+		char flag;
+		String outputfile = "";
+
+		while (i < args.length && args[i].startsWith("-")) {
+			arg = args[i++];
+			for (j = 1; j < arg.length(); j++) {
+				flag = arg.charAt(j);
+				switch (flag) {
+					case 'c';
+						runHangman();
+						break;
+					case 'g':
+						System.out.println("Option n");
+						break;
+					default:
+						System.err.println("ParseCmdLine: illegal option " + flag);
+						break;
+				}
+			}
+		}
+	}
+
+	public static void runHangman() {
 		Scanner sc = new Scanner(System.in);
 		boolean bContinue = true;
 		initialize();
