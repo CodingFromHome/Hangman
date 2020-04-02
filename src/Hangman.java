@@ -25,11 +25,11 @@ public class Hangman {
 			for (j = 1; j < arg.length(); j++) {
 				flag = arg.charAt(j);
 				switch (flag) {
-					case 'c';
+					case 'c':
 						runHangman();
 						break;
 					case 'g':
-						System.out.println("Option n");
+						runHangmanGui();
 						break;
 					default:
 						System.err.println("ParseCmdLine: illegal option " + flag);
@@ -38,7 +38,10 @@ public class Hangman {
 			}
 		}
 	}
-
+	public static void runHangmanGui() {
+		Hangman_Gui gu = new Hangman_Gui();
+		gu.Hangman_Initialize();
+	}
 	public static void runHangman() {
 		Scanner sc = new Scanner(System.in);
 		boolean bContinue = true;

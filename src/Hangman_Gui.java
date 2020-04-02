@@ -1,11 +1,15 @@
 //Usually you will require both swing and awt packages
 // even if you are working with just swings.
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 // Swing UI for Hangman
 // Learning to use Swing
@@ -18,6 +22,54 @@ public class Hangman_Gui {
     private static JButton oK;
     private static JButton newWord;
     private static JTextArea hangMan;
+    public void Hangman_Gui () {
+
+    }
+    public static void Hangman_Initialize() {
+        try {
+        //Creating the Frame
+        frame = new JFrame("Hangman");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(400, 400);
+
+        //Creating the panel at bottom and adding components
+        panel = new JPanel(); // the panel is not visible in output
+        asteriskText = new JLabel("");
+        asteriskText.setFont(new Font("TimesRoman", Font.BOLD, 20));
+        label = new JLabel("Guessa a letter");
+        guessLetter = new JTextField(1); // accepts upto 10 characters
+        oK = new JButton("OK");
+        newWord = new JButton("New Word");
+
+            BufferedImage myPicture = ImageIO.read(new File("hangmn.png"));
+
+        JLabel picLabel = new JLabel(new ImageIcon(myPicture));
+        panel.add(asteriskText); // Components Added using Flow Layout
+        panel.add(label);
+        panel.add(guessLetter);
+        panel.add(oK);
+        panel.add(newWord);
+
+
+        // Text Area at the Center
+        hangMan = new JTextArea();
+
+        //Adding Components to the frame.
+        frame.getContentPane().add(BorderLayout.SOUTH, panel);
+        frame.getContentPane().add(BorderLayout.CENTER, hangMan);
+        frame.getContentPane().add(BorderLayout.NORTH, picLabel);
+        frame.setVisible(true);
+
+        initializeGUI();
+
+        oK.addActionListener(new ButtonClickListener());
+        newWord.addActionListener(new NewWordClickListener());
+        guessLetter.addKeyListener(new LetterGuessedListener());
+        }
+        catch (IOException e) {
+
+        }
+    }
 
     private static class LetterGuessedListener implements KeyListener {
 
@@ -81,38 +133,7 @@ public class Hangman_Gui {
     }
 
     public static void main(String args[]) {
+        Hangman_Initialize();
 
-        //Creating the Frame
-        frame = new JFrame("Hangman");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 400);
-
-        //Creating the panel at bottom and adding components
-        panel = new JPanel(); // the panel is not visible in output
-        asteriskText = new JLabel("");
-        asteriskText.setFont(new Font("TimesRoman", Font.BOLD, 20));
-        label = new JLabel("Guessa a letter");
-        guessLetter = new JTextField(1); // accepts upto 10 characters
-        oK = new JButton("OK");
-        newWord = new JButton("New Word");
-        panel.add(asteriskText); // Components Added using Flow Layout
-        panel.add(label);
-        panel.add(guessLetter);
-        panel.add(oK);
-        panel.add(newWord);
-
-        // Text Area at the Center
-        hangMan = new JTextArea();
-
-        //Adding Components to the frame.
-        frame.getContentPane().add(BorderLayout.SOUTH, panel);
-        frame.getContentPane().add(BorderLayout.CENTER, hangMan);
-        frame.setVisible(true);
-
-        initializeGUI();
-
-        oK.addActionListener(new ButtonClickListener());
-        newWord.addActionListener(new NewWordClickListener());
-        guessLetter.addKeyListener(new LetterGuessedListener());
     }
 }
