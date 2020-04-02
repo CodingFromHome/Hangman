@@ -22,8 +22,9 @@ public class Hangman_Gui {
     private static JButton oK;
     private static JButton newWord;
     private static JTextArea hangMan;
-    public void Hangman_Gui () {
 
+    public Hangman_Gui () {
+        Hangman_Initialize();
     }
     public static void Hangman_Initialize() {
         try {
