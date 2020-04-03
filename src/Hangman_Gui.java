@@ -22,6 +22,8 @@ public class Hangman_Gui {
     private static JButton oK;
     private static JButton newWord;
     private static JTextArea hangMan;
+    private static BufferedImage myPicture;
+    private static JLabel picLabel;
 
     public Hangman_Gui () {
         Hangman_Initialize();
@@ -33,18 +35,18 @@ public class Hangman_Gui {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(400, 400);
 
+        hangMan = new JTextArea();
+
         //Creating the panel at bottom and adding components
         panel = new JPanel(); // the panel is not visible in output
         asteriskText = new JLabel("");
         asteriskText.setFont(new Font("TimesRoman", Font.BOLD, 20));
-        label = new JLabel("Guessa a letter");
+        label = new JLabel("Guess a letter");
         guessLetter = new JTextField(1); // accepts upto 10 characters
         oK = new JButton("OK");
         newWord = new JButton("New Word");
-
-            BufferedImage myPicture = ImageIO.read(new File("hangmn.png"));
-
-        JLabel picLabel = new JLabel(new ImageIcon(myPicture));
+        myPicture = ImageIO.read(new File(Hangman.hangmanGuiImage()));
+        picLabel = new JLabel(new ImageIcon(myPicture));
         panel.add(asteriskText); // Components Added using Flow Layout
         panel.add(label);
         panel.add(guessLetter);
@@ -53,7 +55,7 @@ public class Hangman_Gui {
 
 
         // Text Area at the Center
-        hangMan = new JTextArea();
+
 
         //Adding Components to the frame.
         frame.getContentPane().add(BorderLayout.SOUTH, panel);
@@ -68,7 +70,7 @@ public class Hangman_Gui {
         guessLetter.addKeyListener(new LetterGuessedListener());
         }
         catch (IOException e) {
-
+            JOptionPane.showMessageDialog(frame, e.getMessage());
         }
     }
 
@@ -102,34 +104,50 @@ public class Hangman_Gui {
         }
     }
     private static void initializeGUI () {
-        Hangman.initialize();
-        asteriskText.setForeground(Color.BLACK);
-        asteriskText.setText(Hangman.asterisk);
-        guessLetter.setText("");
+       try {
+            Hangman.initialize();
+            asteriskText.setForeground(Color.BLACK);
+            asteriskText.setText(Hangman.asterisk);
+            guessLetter.setText("");
+            myPicture = ImageIO.read(new File(Hangman.hangmanGuiImage()));
+            picLabel.setIcon(new ImageIcon(myPicture));
+       } catch (IOException e) {
+           JOptionPane.showMessageDialog(frame, e.getMessage());
+       }
+
     }
 
     private static void hangmanChecker (String guessedLetter) {
-
-        if (guessedLetter.length() != 1) {
-            hangMan.setText("Guess a letter ");
-            return;
-        }
-        if (Hangman.count < 7 && Hangman.asterisk.contains("*")) {
-            asteriskText.setText(Hangman.asterisk);
-            String newasterisk = Hangman.getnewAsterisk(guessedLetter);
-
-            if (Hangman.asterisk.equals(newasterisk)) {
-                Hangman.count++;
-                hangMan.setText(Hangman.hangmanGuiImage());
-                asteriskText.setForeground(Color.RED);
-            } else {
-                Hangman.asterisk = newasterisk;
+        try {
+            if (guessedLetter.length() != 1) {
+                hangMan.setText("Guess a letter ");
+                return;
+            }
+            if (Hangman.count < 7 && Hangman.asterisk.contains("*")) {
                 asteriskText.setText(Hangman.asterisk);
-                asteriskText.setForeground(Color.GREEN);
+                String newasterisk = Hangman.getnewAsterisk(guessedLetter);
+
+                if (Hangman.asterisk.equals(newasterisk)) {
+                    Hangman.count++;
+                    myPicture = ImageIO.read(new File(Hangman.hangmanGuiImage()));
+                    picLabel.setIcon(new ImageIcon(myPicture));
+                    if (Hangman.count == 7) {
+                        hangMan.setText("Game over! The word was " + Hangman.word);
+                    } else {
+                        hangMan.setText("Wrong guess, try again");
+                    }
+                    asteriskText.setForeground(Color.RED);
+                } else {
+                    Hangman.asterisk = newasterisk;
+                    asteriskText.setText(Hangman.asterisk);
+                    asteriskText.setForeground(Color.GREEN);
+                }
+                if (Hangman.asterisk.equals(Hangman.word)) {
+                    hangMan.setText("Correct! You win! The word was " + Hangman.word);
+                }
             }
-            if (Hangman.asterisk.equals(Hangman.word)) {
-                hangMan.setText("Correct! You win! The word was " + Hangman.word);
-            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(frame, e.getMessage());
         }
     }
 

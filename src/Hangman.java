@@ -93,7 +93,7 @@ public class Hangman {
 		}
 	}
 
-	public static String hangmanGuiImage() {
+	public static String hangmanTextImage() {
 
 		String hangmanImage = new String("");
 		if (count == 1) {
@@ -180,6 +180,10 @@ public class Hangman {
 		}
 
 		return hangmanImage;
+	}
+
+	public static String hangmanGuiImage() {
+		return "hm_"+count+".png";
 	}
 
 	public static void hangmanImage() {
