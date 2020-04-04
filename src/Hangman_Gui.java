@@ -24,6 +24,11 @@ public class Hangman_Gui {
     private static JTextArea hangMan;
     private static BufferedImage myPicture;
     private static JLabel picLabel;
+    private static JRadioButton radioButtonText;
+    private static JRadioButton radioButtonImage;
+    private static JRadioButton radioButtonAnimation;
+    private static ButtonGroup buttonGroup;
+
 
     public Hangman_Gui () {
         Hangman_Initialize();
@@ -37,7 +42,20 @@ public class Hangman_Gui {
 
         hangMan = new JTextArea();
 
-        //Creating the panel at bottom and adding components
+        radioButtonText = new JRadioButton();
+        radioButtonText.setText("Text");
+        radioButtonImage = new JRadioButton();
+        radioButtonImage.setText("Image");
+        radioButtonAnimation = new JRadioButton();
+        radioButtonAnimation.setText("Animation");
+        buttonGroup = new ButtonGroup();
+        //buttonGroup.("Hangman Image as");
+        buttonGroup.add(radioButtonText);
+        buttonGroup.add(radioButtonImage);
+        buttonGroup.add(radioButtonAnimation);
+
+
+            //Creating the panel at bottom and adding components
         panel = new JPanel(); // the panel is not visible in output
         asteriskText = new JLabel("");
         asteriskText.setFont(new Font("TimesRoman", Font.BOLD, 20));
@@ -52,6 +70,9 @@ public class Hangman_Gui {
         panel.add(guessLetter);
         panel.add(oK);
         panel.add(newWord);
+        panel.add(radioButtonText);
+        panel.add(radioButtonImage);
+        panel.add(radioButtonAnimation);
 
 
         // Text Area at the Center
@@ -65,7 +86,7 @@ public class Hangman_Gui {
 
         initializeGUI();
 
-        oK.addActionListener(new ButtonClickListener());
+            oK.addActionListener(new ButtonClickListener());
         newWord.addActionListener(new NewWordClickListener());
         guessLetter.addKeyListener(new LetterGuessedListener());
         }
