@@ -24,6 +24,7 @@ public class Hangman_Gui {
     private static JTextArea hangMan;
     private static BufferedImage myPicture;
     private static JLabel picLabel;
+    private static JPanel radioButoonGroupPanel;
     private static JRadioButton radioButtonText;
     private static JRadioButton radioButtonImage;
     private static JRadioButton radioButtonAnimation;
@@ -35,60 +36,60 @@ public class Hangman_Gui {
     }
     public static void Hangman_Initialize() {
         try {
-        //Creating the Frame
-        frame = new JFrame("Hangman");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 400);
+            //Creating the Frame
+            frame = new JFrame("Hangman");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setSize(400, 400);
 
-        hangMan = new JTextArea();
+            hangMan = new JTextArea();
 
-        radioButtonText = new JRadioButton();
-        radioButtonText.setText("Text");
-        radioButtonImage = new JRadioButton();
-        radioButtonImage.setText("Image");
-        radioButtonAnimation = new JRadioButton();
-        radioButtonAnimation.setText("Animation");
-        buttonGroup = new ButtonGroup();
-        //buttonGroup.("Hangman Image as");
-        buttonGroup.add(radioButtonText);
-        buttonGroup.add(radioButtonImage);
-        buttonGroup.add(radioButtonAnimation);
+            radioButtonText = new JRadioButton();
+            radioButtonText.setText("Text");
+            radioButtonImage = new JRadioButton();
+            radioButtonImage.setText("Image");
+            radioButtonAnimation = new JRadioButton();
+            radioButtonAnimation.setText("Animation");
+            buttonGroup = new ButtonGroup();
+            //buttonGroup.("Hangman Image as");
+            buttonGroup.add(radioButtonText);
+            buttonGroup.add(radioButtonImage);
+            buttonGroup.add(radioButtonAnimation);
+            radioButoonGroupPanel = new JPanel();
+            radioButoonGroupPanel.setBorder(BorderFactory.createTitledBorder("Hangman Image as"));
+            radioButoonGroupPanel.add(radioButtonText);
+            radioButoonGroupPanel.add(radioButtonImage);
+            radioButoonGroupPanel.add(radioButtonAnimation);
 
+            // Creating the panel at bottom and adding components
+            panel = new JPanel(); // the panel is not visible in output
+            asteriskText = new JLabel("");
+            asteriskText.setFont(new Font("TimesRoman", Font.BOLD, 20));
+            label = new JLabel("Guess a letter");
+            guessLetter = new JTextField(1); // accepts upto 10 characters
+            oK = new JButton("OK");
+            newWord = new JButton("New Word");
+            myPicture = ImageIO.read(new File(Hangman.hangmanGuiImage()));
+            picLabel = new JLabel(new ImageIcon(myPicture));
+            panel.add(asteriskText); // Components Added using Flow Layout
+            panel.add(label);
+            panel.add(guessLetter);
+            panel.add(oK);
+            panel.add(newWord);
+            panel.add(radioButoonGroupPanel);
 
-            //Creating the panel at bottom and adding components
-        panel = new JPanel(); // the panel is not visible in output
-        asteriskText = new JLabel("");
-        asteriskText.setFont(new Font("TimesRoman", Font.BOLD, 20));
-        label = new JLabel("Guess a letter");
-        guessLetter = new JTextField(1); // accepts upto 10 characters
-        oK = new JButton("OK");
-        newWord = new JButton("New Word");
-        myPicture = ImageIO.read(new File(Hangman.hangmanGuiImage()));
-        picLabel = new JLabel(new ImageIcon(myPicture));
-        panel.add(asteriskText); // Components Added using Flow Layout
-        panel.add(label);
-        panel.add(guessLetter);
-        panel.add(oK);
-        panel.add(newWord);
-        panel.add(radioButtonText);
-        panel.add(radioButtonImage);
-        panel.add(radioButtonAnimation);
+            // Text Area at the Center
 
+            //Adding Components to the frame.
+            frame.getContentPane().add(BorderLayout.SOUTH, panel);
+            frame.getContentPane().add(BorderLayout.CENTER, hangMan);
+            frame.getContentPane().add(BorderLayout.NORTH, picLabel);
+            frame.setVisible(true);
 
-        // Text Area at the Center
-
-
-        //Adding Components to the frame.
-        frame.getContentPane().add(BorderLayout.SOUTH, panel);
-        frame.getContentPane().add(BorderLayout.CENTER, hangMan);
-        frame.getContentPane().add(BorderLayout.NORTH, picLabel);
-        frame.setVisible(true);
-
-        initializeGUI();
+            initializeGUI();
 
             oK.addActionListener(new ButtonClickListener());
-        newWord.addActionListener(new NewWordClickListener());
-        guessLetter.addKeyListener(new LetterGuessedListener());
+            newWord.addActionListener(new NewWordClickListener());
+            guessLetter.addKeyListener(new LetterGuessedListener());
         }
         catch (IOException e) {
             JOptionPane.showMessageDialog(frame, e.getMessage());
