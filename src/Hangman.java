@@ -1,14 +1,46 @@
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 
 public class Hangman {
-	private static String[] words = {"terminator", "banana", "computer", "cow", "rain", "water" };
+	private static List<String> words = Collections.emptyList();
 	public static String word;
 	public static String asterisk;
 	public static int count = 0;
-	private static int repeats = 0;
+	public static String wordsFile = "";
+
+	public Hangman() {
+		words.add("terminator");
+		words.add("banana");
+		words.add("computer");
+		words.add("cow");
+		words.add("rain");
+		words.add("water");
+	}
+
+	public static List<String> readFileInList()
+	{
+
+		List<String> lines = Collections.emptyList();
+		try
+		{
+			lines = Files.readAllLines(Paths.get(wordsFile), StandardCharsets.UTF_8);
+		}
+
+		catch (IOException e)
+		{
+			// do something
+			e.printStackTrace();
+		}
+		return lines;
+	}
 
 	public static void initialize() {
-		word = words[(int) (Math.random() * words.length)];
+		word = words.get((int) (Math.random() * words.size()));
 		asterisk = new String(new char[word.length()]).replace("\0", "*");
 		count = 0;
 	}
@@ -18,22 +50,34 @@ public class Hangman {
 		int i = 0, j;
 		String arg;
 		char flag;
-		String outputfile = "";
 
 		while (i < args.length && args[i].startsWith("-")) {
 			arg = args[i++];
-			for (j = 1; j < arg.length(); j++) {
-				flag = arg.charAt(j);
-				switch (flag) {
-					case 'c':
-						runHangman();
-						break;
-					case 'g':
-						runHangmanGui();
-						break;
-					default:
-						System.err.println("ParseCmdLine: illegal option " + flag);
-						break;
+			// use this type of check for arguments that require arguments
+            if (arg.equals("-wordsfile")) {
+				if (i < args.length) {
+					wordsFile = args[i++];
+					words = readFileInList();
+				}
+				else
+					System.err.println("-output requires a filename");
+			}
+
+			// use this type of check for a series of flag arguments
+			else {
+				for (j = 1; j < arg.length(); j++) {
+					flag = arg.charAt(j);
+					switch (flag) {
+						case 'c':
+							runHangman();
+							break;
+						case 'g':
+							runHangmanGui();
+							break;
+						default:
+							System.err.println("ParseCmdLine: illegal option " + flag);
+							break;
+					}
 				}
 			}
 		}
@@ -84,7 +128,7 @@ public class Hangman {
 		String newasterisk = getnewAsterisk(guess);
 		if (asterisk.equals(newasterisk)) {
 			count++;
-			hangmanImage();
+			System.out.println(hangmanTextImage());
 		} else {
 			asterisk = newasterisk;
 		}
@@ -184,89 +228,5 @@ public class Hangman {
 
 	public static String hangmanGuiImage() {
 		return "hm_"+count+".png";
-	}
-
-	public static void hangmanImage() {
-		if (count == 1) {
-			System.out.println("Wrong guess, try again");
-			System.out.println();
-			System.out.println();
-			System.out.println();
-			System.out.println();
-			System.out.println("___|___");
-			System.out.println();
-		}
-		if (count == 2) {
-			System.out.println("Wrong guess, try again");
-			System.out.println("   |");
-			System.out.println("   |");
-			System.out.println("   |");
-			System.out.println("   |");
-			System.out.println("   |");
-			System.out.println("   |");
-			System.out.println("   |");
-			System.out.println("___|___");
-		}
-		if (count == 3) {
-			System.out.println("Wrong guess, try again");
-			System.out.println("   ____________");
-			System.out.println("   |");
-			System.out.println("   |");
-			System.out.println("   |");
-			System.out.println("   |");
-			System.out.println("   |");
-			System.out.println("   |");
-			System.out.println("   | ");
-			System.out.println("___|___");
-		}
-		if (count == 4) {
-			System.out.println("Wrong guess, try again");
-			System.out.println("   ____________");
-			System.out.println("   |          _|_");
-			System.out.println("   |         /   \\");
-			System.out.println("   |        |     |");
-			System.out.println("   |         \\_ _/");
-			System.out.println("   |");
-			System.out.println("   |");
-			System.out.println("   |");
-			System.out.println("___|___");
-		}
-		if (count == 5) {
-			System.out.println("Wrong guess, try again");
-			System.out.println("   ____________");
-			System.out.println("   |          _|_");
-			System.out.println("   |         /   \\");
-			System.out.println("   |        |     |");
-			System.out.println("   |         \\_ _/");
-			System.out.println("   |           |");
-			System.out.println("   |           |");
-			System.out.println("   |");
-			System.out.println("___|___");
-		}
-		if (count == 6) {
-			System.out.println("Wrong guess, try again");
-			System.out.println("   ____________");
-			System.out.println("   |          _|_");
-			System.out.println("   |         /   \\");
-			System.out.println("   |        |     |");
-			System.out.println("   |         \\_ _/");
-			System.out.println("   |           |");
-			System.out.println("   |           |");
-			System.out.println("   |          / \\ ");
-			System.out.println("___|___      /   \\");
-		}
-		if (count == 7) {
-			System.out.println("GAME OVER!");
-			System.out.println("   ____________");
-			System.out.println("   |          _|_");
-			System.out.println("   |         /   \\");
-			System.out.println("   |        |     |");
-			System.out.println("   |         \\_ _/");
-			System.out.println("   |          _|_");
-			System.out.println("   |         / | \\");
-			System.out.println("   |          / \\ ");
-			System.out.println("___|___      /   \\");
-			System.out.println("GAME OVER! The word was " + word);
-		}
 	}
 }
