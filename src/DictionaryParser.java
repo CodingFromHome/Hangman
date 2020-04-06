@@ -20,9 +20,10 @@ public class DictionaryParser {
     public ArrayList<String> parse() throws IOException{
         while ((myLine = bufRead.readLine()) != null) {
             String[] array1 = myLine.split(" ");
-            if (array1.length > 0 && array1[0].length() > 1) {
+            if (array1.length > 0 && array1[0].length() > 1 && !array1[0].contains("-")) {
                 String dicWord = array1[0].trim();
                 dicWord = dicWord.toLowerCase();
+                System.out.println(dicWord);
                 dictionaryWords.add(dicWord);
             }
         }
