@@ -1,19 +1,25 @@
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
 public class Hangman {
-	private static List<String> words = Collections.emptyList();
+	private static ArrayList<String> words = new ArrayList<String>();
 	public static String word;
 	public static String asterisk;
 	public static int count = 0;
 	public static String wordsFile = "";
 
 	public Hangman() {
+
+	}
+
+	private static void initializeWords() {
 		words.add("terminator");
 		words.add("banana");
 		words.add("computer");
@@ -21,6 +27,7 @@ public class Hangman {
 		words.add("rain");
 		words.add("water");
 	}
+
 
 	public static List<String> readFileInList()
 	{
@@ -46,40 +53,45 @@ public class Hangman {
 	}
 
 	public static void main(String[] args) {
-
 		int i = 0, j;
 		String arg;
 		char flag;
+		initializeWords();
 
-		while (i < args.length && args[i].startsWith("-")) {
-			arg = args[i++];
-			// use this type of check for arguments that require arguments
-            if (arg.equals("-wordsfile")) {
-				if (i < args.length) {
-					wordsFile = args[i++];
-					words = readFileInList();
+		try {
+			while (i < args.length && args[i].startsWith("-")) {
+				arg = args[i++];
+				// use this type of check for arguments that require arguments
+				if (arg.equals("-wordsfile")) {
+					if (i < args.length) {
+						wordsFile = args[i++];
+						//words = readFileInList();
+						DictionaryParser dictionaryParser = new DictionaryParser(wordsFile);
+						words = dictionaryParser.parse();
+					} else
+						System.err.println("-output requires a filename");
 				}
-				else
-					System.err.println("-output requires a filename");
-			}
-
-			// use this type of check for a series of flag arguments
-			else {
-				for (j = 1; j < arg.length(); j++) {
-					flag = arg.charAt(j);
-					switch (flag) {
-						case 'c':
-							runHangman();
-							break;
-						case 'g':
-							runHangmanGui();
-							break;
-						default:
-							System.err.println("ParseCmdLine: illegal option " + flag);
-							break;
+				// use this type of check for a series of flag arguments
+				else {
+					for (j = 1; j < arg.length(); j++) {
+						flag = arg.charAt(j);
+						switch (flag) {
+							case 'c':
+								runHangman();
+								break;
+							case 'g':
+								runHangmanGui();
+								break;
+							default:
+								System.err.println("ParseCmdLine: illegal option " + flag);
+								break;
+						}
 					}
 				}
 			}
+		}
+		catch (IOException e) {
+
 		}
 	}
 	public static void runHangmanGui() {
