@@ -56,6 +56,7 @@ public class Hangman {
 		int i = 0, j;
 		String arg;
 		char flag;
+		boolean runHangmanInCommandLine = true;
 		initializeWords();
 
 		try {
@@ -77,10 +78,9 @@ public class Hangman {
 						flag = arg.charAt(j);
 						switch (flag) {
 							case 'c':
-								runHangman();
 								break;
 							case 'g':
-								runHangmanGui();
+								runHangmanInCommandLine = false;
 								break;
 							default:
 								System.err.println("ParseCmdLine: illegal option " + flag);
@@ -89,6 +89,10 @@ public class Hangman {
 					}
 				}
 			}
+			if (runHangmanInCommandLine)
+				runHangman();
+			else
+				runHangmanGui();
 		}
 		catch (IOException e) {
 
