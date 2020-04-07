@@ -13,7 +13,7 @@ import java.io.IOException;
 
 // Swing UI for Hangman
 // Learning to use Swing
-public class Hangman_Gui {
+public class Hangman_Gui{
     private static JFrame frame;
     private static JPanel panel;
     private static JLabel asteriskText;
@@ -29,7 +29,13 @@ public class Hangman_Gui {
     private static JRadioButton radioButtonImage;
     private static JRadioButton radioButtonAnimation;
     private static ButtonGroup buttonGroup;
-
+    // menubar
+    static JMenuBar menuBar;
+    // JMenu
+    static JMenu help;
+    // Menu items
+    static JMenuItem about;
+    private static MenuListener menuListener;
 
     public Hangman_Gui () {
         Hangman_Initialize();
@@ -42,6 +48,7 @@ public class Hangman_Gui {
             frame.setSize(600, 400);
 
             hangMan = new JTextArea();
+            MenuListener menuListener = new MenuListener();
 
             radioButtonText = new JRadioButton();
             radioButtonText.setText("Text");
@@ -78,6 +85,24 @@ public class Hangman_Gui {
             panel.add(newWord);
             panel.add(radioButoonGroupPanel);
 
+            menuBar = new JMenuBar();
+
+            // create a menu
+            help = new JMenu("Help");
+
+            // create menuitems
+            about = new JMenuItem("About");
+
+            about.addActionListener(menuListener);
+            // add menu items to menu
+            help.add(about);
+
+            // add menu to menu bar
+            menuBar.add(help);
+
+            // add menubar to frame
+            frame.setJMenuBar(menuBar);
+
             // Text Area at the Center
 
             //Adding Components to the frame.
@@ -108,6 +133,15 @@ public class Hangman_Gui {
             picLabel.setIcon(new ImageIcon(myPicture));
             hangMan.setVisible(false);
             picLabel.setVisible(true);
+        }
+    }
+
+    private static class MenuListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String s = e.getActionCommand();
+            JOptionPane.showMessageDialog(frame, s);
         }
     }
 
