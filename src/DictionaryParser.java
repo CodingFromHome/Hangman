@@ -9,7 +9,7 @@ import java.util.List;
 public class DictionaryParser {
     private FileReader input;
     private BufferedReader bufRead;
-    String myLine = null;
+
     ArrayList<String> dictionaryWords = new ArrayList<String>();
 
     public DictionaryParser(String fileName) throws FileNotFoundException {
@@ -18,12 +18,20 @@ public class DictionaryParser {
     }
 
     public ArrayList<String> parse() throws IOException{
-        while ((myLine = bufRead.readLine()) != null) {
-            String[] array1 = myLine.split(" ");
-            if (array1.length > 0 && array1[0].length() > 1 && !array1[0].contains("-")) {
-                String dicWord = array1[0].trim();
-                dicWord = dicWord.toLowerCase();
-                dictionaryWords.add(dicWord);
+        String currentLine = null;
+        while ((currentLine = bufRead.readLine()) != null) {
+            String[] stringTokens = currentLine.split(" ");
+            if (stringTokens.length > 0) {
+
+                String firstToken = stringTokens[0];
+
+                //check valid text and skip words with -,',numbers
+                if (firstToken.length() > 1 && !firstToken.contains("-")) {
+                    firstToken = firstToken.toLowerCase();
+                    dictionaryWords.add(firstToken);
+                }
+
+                //String secondToken = stringTokens[1];
             }
         }
         return dictionaryWords;
