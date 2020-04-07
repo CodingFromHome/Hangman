@@ -6,24 +6,50 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * This is the main method which makes use of addNum method.
+ */
 public class DictionaryParser {
     private FileReader input;
     private BufferedReader bufRead;
-    String myLine = null;
+
     ArrayList<String> dictionaryWords = new ArrayList<String>();
+
 
     public DictionaryParser(String fileName) throws FileNotFoundException {
         input = new FileReader(fileName);
         bufRead = new BufferedReader(input);
     }
 
+    /**
+     * This is the main method which makes use of addNum method.
+     * @return ArrayList<String>.
+     * @exception IOException On input error.
+     * @see IOException
+     */
     public ArrayList<String> parse() throws IOException{
-        while ((myLine = bufRead.readLine()) != null) {
-            String[] array1 = myLine.split(" ");
-            if (array1.length > 0 && array1[0].length() > 1 && !array1[0].contains("-")) {
-                String dicWord = array1[0].trim();
-                dicWord = dicWord.toLowerCase();
-                dictionaryWords.add(dicWord);
+        String currentLine = null;
+
+        // Filtering only nouns form the dictionary words
+        while ((currentLine = bufRead.readLine()) != null ) {
+
+            if (currentLine.contains(" n. ")) {
+                String[] stringTokens = currentLine.split("( n. |\\.|\\[)");
+
+                // Skip empty lines in the file
+                if (stringTokens.length > 0) {
+
+                    String firstToken = stringTokens[0];
+                    // Check valid text and skip words that contain one of (-, numbers,')
+                    if (firstToken.length() > 1 && !firstToken.contains("-")) {
+                        DictionaryWord dictionaryWord = new DictionaryWord();
+                        dictionaryWord.word = stringTokens[0].trim();
+                        dictionaryWord.word = dictionaryWord.word.toLowerCase();
+                        dictionaryWord.wordTyoe = DictionaryWord.WordTypes.NOUN;
+                        dictionaryWords.add(dictionaryWord.word);
+                    }
+
+                }
             }
         }
         return dictionaryWords;
