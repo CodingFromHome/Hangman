@@ -22,13 +22,13 @@ public class DictionaryParser {
         while ((currentLine = bufRead.readLine()) != null) {
             String[] stringTokens = currentLine.split(" ");
             if (stringTokens.length > 0) {
-
-                String firstToken = stringTokens[0];
+                DictionaryWord dictionaryWord = new DictionaryWord();
+                dictionaryWord.word = stringTokens[0];
 
                 //check valid text and skip words with -,',numbers
-                if (firstToken.length() > 1 && !firstToken.contains("-")) {
-                    firstToken = firstToken.toLowerCase();
-                    dictionaryWords.add(firstToken);
+                if (dictionaryWord.word.length() > 1 && !dictionaryWord.word.contains("-")) {
+                    dictionaryWord.word = dictionaryWord.word.toLowerCase();
+                    dictionaryWords.add(dictionaryWord.word);
                 }
 
                 //String secondToken = stringTokens[1];
