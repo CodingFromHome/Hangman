@@ -5,7 +5,7 @@ public class DictionaryWord {
 
     public String word;
     public ArrayList<String> definitions;
-    public WordTypes wordTyoe;
+    public WordTypes wordType;
     public String root;
 
 }

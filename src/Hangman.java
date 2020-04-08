@@ -100,6 +100,7 @@ public class Hangman {
 	}
 	public static void runHangmanGui() {
 		Hangman_Gui gu = new Hangman_Gui();
+
 	}
 	public static void runHangman() {
 		Scanner sc = new Scanner(System.in);

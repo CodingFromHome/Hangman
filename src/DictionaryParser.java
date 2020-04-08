@@ -45,7 +45,7 @@ public class DictionaryParser {
                         DictionaryWord dictionaryWord = new DictionaryWord();
                         dictionaryWord.word = stringTokens[0].trim();
                         dictionaryWord.word = dictionaryWord.word.toLowerCase();
-                        dictionaryWord.wordTyoe = DictionaryWord.WordTypes.NOUN;
+                        dictionaryWord.wordType = DictionaryWord.WordTypes.NOUN;
                         dictionaryWords.add(dictionaryWord.word);
                     }
 
