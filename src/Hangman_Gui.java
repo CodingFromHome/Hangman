@@ -13,8 +13,7 @@ import java.io.IOException;
 
 // Swing UI for Hangman
 // Learning to use Swing
-public class Hangman_Gui{
-    private static JFrame frame;
+public class Hangman_Gui extends JFrame {
     private static JPanel panel;
     private static JLabel asteriskText;
     private static JLabel label;
@@ -24,7 +23,7 @@ public class Hangman_Gui{
     private static JTextArea hangMan;
     private static BufferedImage myPicture;
     private static JLabel picLabel;
-    private static JPanel radioButoonGroupPanel;
+    private static JPanel radioButtonGroupPanel;
     private static JRadioButton radioButtonText;
     private static JRadioButton radioButtonImage;
     private static JRadioButton radioButtonAnimation;
@@ -40,12 +39,12 @@ public class Hangman_Gui{
     public Hangman_Gui () {
         Hangman_Initialize();
     }
-    public static void Hangman_Initialize() {
+    public void Hangman_Initialize() {
         try {
             //Creating the Frame
-            frame = new JFrame("Hangman");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setSize(600, 400);
+            setTitle("Hangman");
+            setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            setSize(600, 400);
 
             hangMan = new JTextArea();
             MenuListener menuListener = new MenuListener();
@@ -62,11 +61,11 @@ public class Hangman_Gui{
             buttonGroup.add(radioButtonText);
             buttonGroup.add(radioButtonImage);
             buttonGroup.add(radioButtonAnimation);
-            radioButoonGroupPanel = new JPanel();
-            radioButoonGroupPanel.setBorder(BorderFactory.createTitledBorder("Hangman Image as"));
-            radioButoonGroupPanel.add(radioButtonText);
-            radioButoonGroupPanel.add(radioButtonImage);
-            radioButoonGroupPanel.add(radioButtonAnimation);
+            radioButtonGroupPanel = new JPanel();
+            radioButtonGroupPanel.setBorder(BorderFactory.createTitledBorder("Hangman Image as"));
+            radioButtonGroupPanel.add(radioButtonText);
+            radioButtonGroupPanel.add(radioButtonImage);
+            radioButtonGroupPanel.add(radioButtonAnimation);
 
             // Creating the panel at bottom and adding components
             panel = new JPanel(); // the panel is not visible in output
@@ -83,7 +82,7 @@ public class Hangman_Gui{
             panel.add(guessLetter);
             panel.add(oK);
             panel.add(newWord);
-            panel.add(radioButoonGroupPanel);
+            panel.add(radioButtonGroupPanel);
 
             menuBar = new JMenuBar();
 
@@ -101,15 +100,15 @@ public class Hangman_Gui{
             menuBar.add(help);
 
             // add menubar to frame
-            frame.setJMenuBar(menuBar);
+            setJMenuBar(menuBar);
 
             // Text Area at the Center
 
             //Adding Components to the frame.
-            frame.getContentPane().add(BorderLayout.SOUTH, panel);
-            frame.getContentPane().add(BorderLayout.CENTER, hangMan);
-            frame.getContentPane().add(BorderLayout.NORTH, picLabel);
-            frame.setVisible(true);
+            getContentPane().add(BorderLayout.SOUTH, panel);
+            getContentPane().add(BorderLayout.CENTER, hangMan);
+            getContentPane().add(BorderLayout.WEST, picLabel);
+            setVisible(true);
 
             initializeGUI();
 
@@ -118,7 +117,7 @@ public class Hangman_Gui{
             guessLetter.addKeyListener(new LetterGuessedListener());
         }
         catch (IOException e) {
-            JOptionPane.showMessageDialog(frame, e.getMessage());
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }
 
@@ -136,16 +135,16 @@ public class Hangman_Gui{
         }
     }
 
-    private static class MenuListener implements ActionListener {
+    private class MenuListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
             String s = e.getActionCommand();
-            JOptionPane.showMessageDialog(frame, s);
+            //JOptionPane.showMessageDialog(this, s);
         }
     }
 
-    private static class LetterGuessedListener implements KeyListener {
+    private  class LetterGuessedListener implements KeyListener {
 
         @Override
         public void keyTyped(KeyEvent ke) {
@@ -162,19 +161,19 @@ public class Hangman_Gui{
         }
     }
 
-    private static class ButtonClickListener implements ActionListener {
+    private class ButtonClickListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             String guessedLetter = guessLetter.getText();
             hangmanChecker(guessedLetter);
         }
     }
 
-    private static class NewWordClickListener implements ActionListener {
+    private class NewWordClickListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             initializeGUI();
         }
     }
-    private static void initializeGUI () {
+    private void initializeGUI () {
        try {
             Hangman.initialize();
             asteriskText.setForeground(Color.BLACK);
@@ -182,12 +181,12 @@ public class Hangman_Gui{
             guessLetter.setText("");
             displayHangman();
        } catch (IOException e) {
-           JOptionPane.showMessageDialog(frame, e.getMessage());
+           JOptionPane.showMessageDialog(this, e.getMessage());
        }
 
     }
 
-    private static void hangmanChecker (String guessedLetter) {
+    private void hangmanChecker (String guessedLetter) {
         try {
             if (guessedLetter.length() != 1) {
                 hangMan.setText("Guess a letter ");
@@ -211,11 +210,11 @@ public class Hangman_Gui{
                 }
             }
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(frame, e.getMessage());
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }
 
-    public static void main(String args[]) {
+    public void main(String args[]) {
         Hangman_Initialize();
 
     }
