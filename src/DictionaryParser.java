@@ -22,8 +22,8 @@ public class DictionaryParser {
     }
 
     /**
-     * This is the main method which makes use of addNum method.
-     * @return ArrayList<String>.
+     * This parses the 'Oxford dictinary' file format into word and definiitons.
+     * @return ArrayList<String> List of words (noun)
      * @exception IOException On input error.
      * @see IOException
      */
