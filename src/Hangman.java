@@ -14,12 +14,14 @@ public class Hangman {
 	public static String asterisk;
 	public static int count = 0;
 	public static String wordsFile = "";
+	public static boolean useDictWords = false;
+	public static DictionaryWord dictionaryWord;
 
 	public Hangman() {
 
 	}
 
-	private static void initializeWords() {
+	private static void initializeWordsArray() {
 		words.add("terminator");
 		words.add("banana");
 		words.add("computer");
@@ -46,8 +48,17 @@ public class Hangman {
 		return lines;
 	}
 
-	public static void initialize() {
-		word = words.get((int) (Math.random() * words.size()));
+	public static void initializeWord() throws IOException {
+		if (useDictWords) {
+			dictionaryWord = (DictionaryParser.parse()).get((int) (Math.random() * DictionaryParser.parse().size()));
+			word = dictionaryWord.word;
+		} else {
+			word = words.get((int) (Math.random() * words.size()));
+		}
+	}
+
+	public static void initialize() throws IOException {
+		initializeWord();
 		asterisk = new String(new char[word.length()]).replace("\0", "*");
 		count = 0;
 	}
@@ -57,7 +68,7 @@ public class Hangman {
 		String arg;
 		char flag;
 		boolean runHangmanInCommandLine = true;
-		initializeWords();
+		initializeWordsArray();
 
 		try {
 			while (i < args.length && args[i].startsWith("-")) {
@@ -68,7 +79,7 @@ public class Hangman {
 						wordsFile = args[i++];
 						//words = readFileInList();
 						DictionaryParser dictionaryParser = new DictionaryParser(wordsFile);
-						words = dictionaryParser.parse();
+						useDictWords = true;
 					} else
 						System.err.println("-output requires a filename");
 				}
@@ -89,6 +100,7 @@ public class Hangman {
 					}
 				}
 			}
+			initializeWord();
 			if (runHangmanInCommandLine)
 				runHangman();
 			else
@@ -100,9 +112,8 @@ public class Hangman {
 	}
 	public static void runHangmanGui() {
 		Hangman_Gui gu = new Hangman_Gui();
-
 	}
-	public static void runHangman() {
+	public static void runHangman () throws IOException {
 		Scanner sc = new Scanner(System.in);
 		boolean bContinue = true;
 		initialize();

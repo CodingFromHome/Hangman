@@ -28,6 +28,7 @@ public class Hangman_Gui extends JFrame {
     private static JRadioButton radioButtonImage;
     private static JRadioButton radioButtonAnimation;
     private static ButtonGroup buttonGroup;
+    private static JTextArea definition;
     // menubar
     static JMenuBar menuBar;
     // JMenu
@@ -47,6 +48,7 @@ public class Hangman_Gui extends JFrame {
             setSize(600, 400);
 
             hangMan = new JTextArea();
+            definition = new JTextArea();
             MenuListener menuListener = new MenuListener();
 
             radioButtonText = new JRadioButton();
@@ -108,6 +110,7 @@ public class Hangman_Gui extends JFrame {
             getContentPane().add(BorderLayout.SOUTH, panel);
             getContentPane().add(BorderLayout.CENTER, hangMan);
             getContentPane().add(BorderLayout.WEST, picLabel);
+            getContentPane().add(BorderLayout.EAST, definition);
             setVisible(true);
 
             initializeGUI();
@@ -179,6 +182,7 @@ public class Hangman_Gui extends JFrame {
             asteriskText.setForeground(Color.BLACK);
             asteriskText.setText(Hangman.asterisk);
             guessLetter.setText("");
+            definition.setText(Hangman.dictionaryWord.definitions.get(0));
             displayHangman();
        } catch (IOException e) {
            JOptionPane.showMessageDialog(this, e.getMessage());

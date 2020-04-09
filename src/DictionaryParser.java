@@ -11,9 +11,8 @@ import java.util.List;
  */
 public class DictionaryParser {
     private FileReader input;
-    private BufferedReader bufRead;
-
-    ArrayList<String> dictionaryWords = new ArrayList<String>();
+    private static BufferedReader bufRead;
+    private static ArrayList<DictionaryWord> dictionaryWords = new ArrayList<DictionaryWord>();
 
 
     public DictionaryParser(String fileName) throws FileNotFoundException {
@@ -27,7 +26,7 @@ public class DictionaryParser {
      * @exception IOException On input error.
      * @see IOException
      */
-    public ArrayList<String> parse() throws IOException{
+    public static ArrayList<DictionaryWord> parse() throws IOException{
         String currentLine = null;
 
         // Filtering only nouns form the dictionary words
@@ -37,16 +36,17 @@ public class DictionaryParser {
                 String[] stringTokens = currentLine.split("( n. |\\.|\\[)");
 
                 // Skip empty lines in the file
-                if (stringTokens.length > 0) {
+                if (stringTokens.length > 1) {
 
-                    String firstToken = stringTokens[0];
+                    String firstToken = stringTokens[0].trim();
                     // Check valid text and skip words that contain one of (-, numbers,')
-                    if (firstToken.length() > 1 && !firstToken.contains("-")) {
+                    if (firstToken.length() > 1 && !firstToken.contains("-") && !firstToken.contains(" ")) {
                         DictionaryWord dictionaryWord = new DictionaryWord();
                         dictionaryWord.word = stringTokens[0].trim();
                         dictionaryWord.word = dictionaryWord.word.toLowerCase();
                         dictionaryWord.wordType = DictionaryWord.WordTypes.NOUN;
-                        dictionaryWords.add(dictionaryWord.word);
+                        dictionaryWord.definitions.add(stringTokens[1]);
+                        dictionaryWords.add(dictionaryWord);
                     }
 
                 }
