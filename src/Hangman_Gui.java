@@ -47,9 +47,12 @@ public class Hangman_Gui extends JFrame {
             setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             setSize(600, 400);
 
+
+
             hangMan = new JTextArea();
             definition = new JTextArea();
             MenuListener menuListener = new MenuListener();
+            definition.setSize(400,200);
 
             radioButtonText = new JRadioButton();
             radioButtonText.setText("Text");
@@ -182,7 +185,14 @@ public class Hangman_Gui extends JFrame {
             asteriskText.setForeground(Color.BLACK);
             asteriskText.setText(Hangman.asterisk);
             guessLetter.setText("");
-            definition.setText(Hangman.dictionaryWord.definitions.get(0));
+            definition.setText("Definition: \n");
+            for (int i = 0; i<Hangman.dictionaryWord.definitions.size();i++) {
+                String definitionString = String.format("%d. %s \n",i+1,Hangman.dictionaryWord.definitions.get(i));
+                definition.append(definitionString);
+
+            }
+            definition.append("\n \n Root: "+Hangman.dictionaryWord.root);
+           definition.setLineWrap(true);
             displayHangman();
        } catch (IOException e) {
            JOptionPane.showMessageDialog(this, e.getMessage());

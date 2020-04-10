@@ -33,7 +33,7 @@ public class DictionaryParser {
         while ((currentLine = bufRead.readLine()) != null ) {
 
             if (currentLine.contains(" n. ")) {
-                String[] stringTokens = currentLine.split("( n. |\\.|\\[)");
+                String[] stringTokens = currentLine.split("( n. |\\[)");
 
                 // Skip empty lines in the file
                 if (stringTokens.length > 1) {
@@ -45,7 +45,17 @@ public class DictionaryParser {
                         dictionaryWord.word = stringTokens[0].trim();
                         dictionaryWord.word = dictionaryWord.word.toLowerCase();
                         dictionaryWord.wordType = DictionaryWord.WordTypes.NOUN;
-                        dictionaryWord.definitions.add(stringTokens[1]);
+                        for (int i = 1;i<stringTokens.length;i++) {
+                            String[] definitionTokens = stringTokens[i].split("\\d+");
+                            for (int j = 0;j<definitionTokens.length;j++) {
+                                if (!definitionTokens[j].contains("(") && !definitionTokens[j].contains(")")) {
+                                    dictionaryWord.definitions.add(definitionTokens[j]);
+
+                                }
+                            }
+                        }
+                        String rootPart = stringTokens[stringTokens.length-1];
+                        dictionaryWord.root = rootPart.substring(0,rootPart.length()-1);
                         dictionaryWords.add(dictionaryWord);
                     }
 
