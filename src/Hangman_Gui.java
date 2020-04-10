@@ -142,11 +142,14 @@ public class Hangman_Gui extends JFrame {
     }
 
     private class MenuListener implements ActionListener {
-
         @Override
         public void actionPerformed(ActionEvent e) {
             String s = e.getActionCommand();
-            //JOptionPane.showMessageDialog(this, s);
+            JDialog dialog = new JDialog();
+            JLabel label = new JLabel("This is About dialog");
+            dialog.add(label);
+            dialog.setSize(300, 300);
+            dialog.setVisible(true);
         }
     }
 
@@ -223,13 +226,13 @@ public class Hangman_Gui extends JFrame {
                     hangMan.setText("Correct! You win! The word was " + Hangman.word);
                 }
             }
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }
 
     public void main(String args[]) {
         Hangman_Initialize();
-
     }
 }
