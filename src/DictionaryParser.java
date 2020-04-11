@@ -3,8 +3,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+
 
 /**
  * This is the main method which makes use of addNum method.
@@ -21,7 +20,7 @@ public class DictionaryParser {
     }
 
     /**
-     * This parses the 'Oxford dictinary' file format into word and definiitons.
+     * This parses the 'Oxford dictionary' file format into word and definitions.
      * @return ArrayList<String> List of words (noun)
      * @exception IOException On input error.
      * @see IOException
@@ -45,8 +44,8 @@ public class DictionaryParser {
                         dictionaryWord.word = stringTokens[0].trim();
                         dictionaryWord.word = dictionaryWord.word.toLowerCase();
                         dictionaryWord.wordType = DictionaryWord.WordTypes.NOUN;
-                        for (int i = 1;i<stringTokens.length;i++) {
-                            String[] definitionTokens = stringTokens[i].split("\\d+");
+                           for (int i = 1;i<stringTokens.length;i++) {
+                                String[] definitionTokens = stringTokens[i].split("\\d+");
                             for (int j = 0;j<definitionTokens.length;j++) {
                                 if (!definitionTokens[j].contains("(") && !definitionTokens[j].contains(")")) {
                                     dictionaryWord.definitions.add(definitionTokens[j]);
@@ -54,8 +53,9 @@ public class DictionaryParser {
                                 }
                             }
                         }
-                        String rootPart = stringTokens[stringTokens.length-1];
-                        dictionaryWord.root = rootPart.substring(0,rootPart.length()-1);
+                        String maybeRootPart = stringTokens[stringTokens.length-1];
+                        if (maybeRootPart.contains("]"))
+                            dictionaryWord.root = maybeRootPart.substring(0,maybeRootPart.length()-1);
                         dictionaryWords.add(dictionaryWord);
                     }
 

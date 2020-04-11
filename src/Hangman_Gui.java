@@ -189,11 +189,12 @@ public class Hangman_Gui extends JFrame {
             asteriskText.setText(Hangman.asterisk);
             guessLetter.setText("");
             definition.setText("Definition: \n");
-            for (int i = 0; i<Hangman.dictionaryWord.definitions.size();i++) {
-                String definitionString = String.format("%d. %s \n",i+1,Hangman.dictionaryWord.definitions.get(i));
-                definition.append(definitionString);
+            Hangman.dictionaryWord.definitions.forEach((n -> definition.append(String.format("%s \n",n))));
+            //for (int i = 0; i<Hangman.dictionaryWord.definitions.size();i++) {
+                //String definitionString = String.format("%d. %s \n",i+1,Hangman.dictionaryWord.definitions.get(i));
+               // definition.append(definitionString);
 
-            }
+           // }
             definition.append("\n \n Root: "+Hangman.dictionaryWord.root);
            definition.setLineWrap(true);
             displayHangman();
